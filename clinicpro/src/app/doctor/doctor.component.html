@@ -1,0 +1,120 @@
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Register ID</th>
+      <th>Pulse</th>
+      <th>Temperature</th>
+      <th>GPS</th>
+      <th>GSM</th>
+     
+      <th>Gender</th>
+      <th>Contact</th>
+      <th>Address</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Age</th>
+       <th>Map</th>
+      <th>Ambulance</th> <!-- ✅ New column -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of combinedData">
+      <ng-container *ngIf="isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)">
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.first_name }} {{ item.patient?.last_name }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.register_id }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.pulse_oximeter_sensor?.value }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.temperature_sensor?.value }}
+        </td>
+        <!-- <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.gps_sensor?.value }}
+        </td> -->
+         <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.gsm_sensor?.value }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.gsm_sensor?.value }}
+        </td>
+        
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.gender }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.contact }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.address }}
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.height }} cm
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.weight }} kg
+        </td>
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          {{ item.patient?.age }}
+        </td>
+
+         <!-- 🗺️ Map -->
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          <a
+            [href]="'https://www.google.com/maps?q=' + item.gps_sensor?.location.latitude + ',' + item.gps_sensor?.location.longitude"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="View Location on Map"
+          >
+            🗺️
+          </a>
+        </td>
+        <!-- 🚑 Ambulance -->
+        <td [ngClass]="{'high-priority': isHighPriority(item.temperature_sensor?.value, item.pulse_oximeter_sensor?.value)}">
+          <button (click)="allocateAmbulance(item)" title="Allocate Ambulance">🚑</button>
+        </td>
+
+      </ng-container>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+
+<!-- Appointments -->
+<div *ngIf="appointments.length > 0">
+  <h2>WELCOME, HAVE A NICE DAY</h2>
+  <table class="appointment-table">
+    <thead>
+      <tr>
+        <th>Token No</th>
+        <th>Action</th>
+        <th>Checking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments" class="table-row">
+        <td>{{ appointment.token_no }}</td>
+        <td>
+          <button class="action-button" (click)="takeDiagnosis(appointment)">Take Diagnosis</button>
+          <button class="action-button" (click)="goToPatientHistory(appointment.register_id)">Patient History</button>
+          <button class="action-button" (click)="goToPatientDetails(appointment.register_id)">Patient Details</button>
+        </td>
+        <td>
+          <button class="action-button" (click)="deleteAppointment(appointment.appointment_id)">CLICK IF CHECKED</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- No Appointments -->
+<div *ngIf="appointments.length === 0">
+  <p>No appointments for today.</p>
+</div>
