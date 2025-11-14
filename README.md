@@ -1,4 +1,4 @@
-# Smart Hospital Management System – Django & Angular
+# Clinic Management System – Django & Angular
 
 The Smart Hospital Management System is a full-stack application designed to enhance hospital operations through real-time patient monitoring and automated resource management. The system integrates IoT-based health tracking, a Django backend, and an Angular frontend to deliver an efficient healthcare management solution.
 
